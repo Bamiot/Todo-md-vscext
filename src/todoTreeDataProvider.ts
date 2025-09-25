@@ -70,11 +70,11 @@ export class TodoTreeItem extends vscode.TreeItem {
 
       // Parse markdown styles first to clean text
       const styles = parseMarkdownStyles(this.label || todoItem.text);
-      this.label = styles.text; // Utiliser le texte nettoyé
+      this.label = styles.text;
 
-      // Show "completed" description for completed tasks
+      // Show "complete" description for completed tasks
       if (todoItem.completed) {
-        this.description = "completed";
+        this.description = "complete";
       }
 
       this.command = {
@@ -90,7 +90,7 @@ export class TodoTreeItem extends vscode.TreeItem {
 
       this.tooltip = `Line ${todoItem.line + 1}: ${styles.text}${
         todoItem.depth > 0 ? ` (depth: ${todoItem.depth})` : ""
-      }`;
+      }${todoItem.completed ? " - COMPLETE" : ""}`;
     } else if (section) {
       this.contextValue = "todoSection";
       this.iconPath = new vscode.ThemeIcon("folder");
