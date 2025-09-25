@@ -1,0 +1,5 @@
+- [ ] settings
+  - [ ] strokline
+  - [ ] filename
+  - [ ] confirmation
+- [ ] support nested task

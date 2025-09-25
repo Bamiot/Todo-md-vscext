@@ -1,0 +1,147 @@
+{
+  "name": "todo-md",
+  "displayName": "Todo-MD",
+  "description": "a todo manager using md file",
+  "version": "0.0.1",
+  "publisher": "your-publisher-name",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/todo-md-vscode"
+  },
+  "engines": {
+    "vscode": "^1.104.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "todoView",
+          "name": "Todo List",
+          "when": "todomd:hasWorkspace",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "todo-md.openTodoFile",
+        "title": "Open Todo File",
+        "icon": "$(file-add)"
+      },
+      {
+        "command": "todo-md.addTodo",
+        "title": "Add Todo",
+        "icon": "$(add)"
+      },
+      {
+        "command": "todo-md.toggleTodo",
+        "title": "Toggle Todo",
+        "icon": "$(check)"
+      },
+      {
+        "command": "todo-md.deleteTodo",
+        "title": "Delete Todo",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "todo-md.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "todo-md.selectTodoFile",
+        "title": "Select Todo File",
+        "icon": "$(file)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "todo-md.refresh",
+          "when": "view == todoView",
+          "group": "navigation"
+        },
+        {
+          "command": "todo-md.addTodo",
+          "when": "view == todoView",
+          "group": "navigation"
+        },
+        {
+          "command": "todo-md.selectTodoFile",
+          "when": "view == todoView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "todo-md.toggleTodo",
+          "when": "view == todoView",
+          "group": "inline"
+        },
+        {
+          "command": "todo-md.deleteTodo",
+          "when": "view == todoView",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Todo MD",
+      "properties": {
+        "todoMd.defaultFile": {
+          "type": "string",
+          "default": "todo.md",
+          "description": "Default todo file name"
+        },
+        "todoMd.filePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/todo.md",
+            "**/TODO.md",
+            "**/*.todo.md"
+          ],
+          "description": "File patterns to search for todo files (supports glob patterns)"
+        },
+        "todoMd.strikeCompletedTasks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Strike through completed tasks in the tree view"
+        },
+        "todoMd.confirmDeletion": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show confirmation dialog before deleting todo items"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.104.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/parser": "^8.42.0",
+    "eslint": "^9.34.0",
+    "typescript": "^5.9.2",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
