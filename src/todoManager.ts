@@ -58,8 +58,13 @@ export class TodoManager {
 
     // Create a new file watcher
     this.fileWatcher = vscode.workspace.createFileSystemWatcher(uri.fsPath);
-    this.fileWatcher.onDidChange(() => this.loadTodos());
-    this.fileWatcher.onDidCreate(() => this.loadTodos());
+    this.fileWatcher.onDidChange(() => {
+      // Add a small delay to avoid timing conflicts
+      setTimeout(() => this.loadTodos(), 100);
+    });
+    this.fileWatcher.onDidCreate(() => {
+      setTimeout(() => this.loadTodos(), 100);
+    });
 
     // Load todos
     await this.loadTodos();
@@ -150,6 +155,9 @@ export class TodoManager {
           this.currentTodoFile,
           Buffer.from(updatedContent, "utf8")
         );
+        
+        // Explicitly reload todos to update tree view
+        await this.loadTodos();
       }
     } catch (error) {
       console.error("Error updating file formatting:", error);
@@ -193,6 +201,10 @@ export class TodoManager {
         this.currentTodoFile,
         Buffer.from(updatedContent, "utf8")
       );
+      
+      // Explicitly reload todos to update tree view
+      await this.loadTodos();
+      
       vscode.window.showInformationMessage("Todo item added successfully");
     } catch (error) {
       console.error("Error adding todo:", error);
@@ -233,6 +245,9 @@ export class TodoManager {
         this.currentTodoFile,
         Buffer.from(updatedContent, "utf8")
       );
+      
+      // Explicitly reload todos to update tree view
+      await this.loadTodos();
     } catch (error) {
       console.error("Error toggling todo:", error);
       vscode.window.showErrorMessage(`Error toggling todo: ${error}`);
@@ -287,6 +302,9 @@ export class TodoManager {
         this.currentTodoFile,
         Buffer.from(updatedContent, "utf8")
       );
+      
+      // Explicitly reload todos to update tree view
+      await this.loadTodos();
     } catch (error) {
       console.error("Error deleting todo:", error);
       vscode.window.showErrorMessage(`Error deleting todo: ${error}`);
