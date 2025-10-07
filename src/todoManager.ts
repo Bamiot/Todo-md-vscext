@@ -155,7 +155,7 @@ export class TodoManager {
           this.currentTodoFile,
           Buffer.from(updatedContent, "utf8")
         );
-        
+
         // Explicitly reload todos to update tree view
         await this.loadTodos();
       }
@@ -201,10 +201,10 @@ export class TodoManager {
         this.currentTodoFile,
         Buffer.from(updatedContent, "utf8")
       );
-      
+
       // Explicitly reload todos to update tree view
       await this.loadTodos();
-      
+
       vscode.window.showInformationMessage("Todo item added successfully");
     } catch (error) {
       console.error("Error adding todo:", error);
@@ -245,7 +245,7 @@ export class TodoManager {
         this.currentTodoFile,
         Buffer.from(updatedContent, "utf8")
       );
-      
+
       // Explicitly reload todos to update tree view
       await this.loadTodos();
     } catch (error) {
@@ -302,7 +302,7 @@ export class TodoManager {
         this.currentTodoFile,
         Buffer.from(updatedContent, "utf8")
       );
-      
+
       // Explicitly reload todos to update tree view
       await this.loadTodos();
     } catch (error) {
